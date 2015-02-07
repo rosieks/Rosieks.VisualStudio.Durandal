@@ -22,16 +22,31 @@ namespace Rosieks.VisualStudio.Durandal
 
         private IEnumerable<string> InitModules()
         {
+            var modules = new List<string>();
             var dte = DurandalPackage.DTE;
             foreach (var item in dte.GetActiveProject().ProjectItems.Cast<ProjectItem>())
             {
-                if (item.IsProjectFolder() && item.Name.Equals("app", System.StringComparison.OrdinalIgnoreCase))
+                if (item.IsProjectFolder())
                 {
-                    return LookForModules(item, Enumerable.Empty<string>());
+                    if (item.Name.Equals("app", System.StringComparison.OrdinalIgnoreCase))
+                    {
+                        modules.AddRange(LookForModules(item, Enumerable.Empty<string>()));
+                    }
+                    else if (item.Name.Equals("scripts", System.StringComparison.OrdinalIgnoreCase))
+                    {
+                        var durandal = item.ProjectItems.Cast<ProjectItem>().FirstOrDefault(x => x.IsProjectFolder() && string.Equals(x.Name, "durandal", System.StringComparison.OrdinalIgnoreCase));
+                        if (durandal != null)
+                        {
+                            var plugins = durandal.ProjectItems.Cast<ProjectItem>().FirstOrDefault(x => x.IsProjectFolder() && string.Equals(x.Name, "plugins", System.StringComparison.OrdinalIgnoreCase));
+                            modules.AddRange(LookForModules(plugins, new[] { "plugins" }));
+                        }
+
+                        modules.AddRange(LookForModules(durandal, new[] { "durandal" }));
+                    }
                 }
             }
 
-            return Enumerable.Empty<string>();
+            return modules;
         }
 
         private IEnumerable<string> LookForModules(ProjectItem parent, IEnumerable<string> names)

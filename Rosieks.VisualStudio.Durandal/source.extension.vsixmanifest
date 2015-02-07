@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="e08ece08-8eac-471d-a56b-1775e9c53e78" Version="0.2.0" Language="en-US" Publisher="Sławomir Rosiek" />
+    <Identity Id="e08ece08-8eac-471d-a56b-1775e9c53e78" Version="0.2.1" Language="en-US" Publisher="Sławomir Rosiek" />
     <DisplayName>Durandal extensions for Visual Studio 2013</DisplayName>
     <Description xml:space="preserve">Adds many useful features to Visual Studio for DurandalJS developers.</Description>
     <Tags>Javascript, Durandal</Tags>
